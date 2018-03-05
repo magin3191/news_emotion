@@ -8,7 +8,7 @@ ERD:
 https://github.com/magin3191/news_emotion/blob/master/Untitled%20Diagram.pdf
 
 Routes:
-https://github.com/magin3191/news_emotion/blob/master/Capstone%20routes.rtfd.zip
+https://github.com/magin3191/news_emotion/blob/master/routes.pdf
 
 Style Guide:
 [styleguide.pdf](https://github.com/magin3191/news_emotion/files/1779137/styleguide.pdf)
