@@ -11,3 +11,4 @@ Routes:
 https://github.com/magin3191/news_emotion/blob/master/Capstone%20routes.rtfd.zip
 
 Style Guide:
+[styleguide.pdf](https://github.com/magin3191/news_emotion/files/1779137/styleguide.pdf)
