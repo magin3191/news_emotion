@@ -8,5 +8,6 @@ ERD:
 https://github.com/magin3191/news_emotion/blob/master/Untitled%20Diagram.pdf
 
 Routes:
-https://github.com/magin3191/news_emotion/blob/master/IMG_20180301_143926510.jpg
-https://github.com/magin3191/news_emotion/blob/master/IMG_20180301_143939853.jpg
+https://github.com/magin3191/news_emotion/blob/master/Capstone%20routes.rtfd.zip
+
+Style Guide:
