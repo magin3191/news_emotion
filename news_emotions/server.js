@@ -4,6 +4,9 @@ var port = process.env.PORT || 3000
 var knex = require('./knex')
 var cors = require('cors')
 app.use(cors())
+var bodyParser = require('body-parser')
+app.use(bodyParser.json())
+
 let date = new Date().toISOString().substr(0, 10)
 var oneWeekAgo = new Date()
 oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
@@ -28,10 +31,11 @@ app.listen(port,function(){
 
 app.get('/watson',function(req,res,next){
 let sourceArr = []
+  console.log(req.body)
   async function getNews() {
     newsapi.v2
       .everything({
-        sources: 'the-new-york-times',
+        sources: 'fox-news',//req.body
         from: `${weekAgo}`,
         to: `${date}`,
         language: 'en',
