@@ -12,16 +12,11 @@ import $ from 'jquery';
 
 
 
-const Sidebar = ({data,toggleCheck,genericToggle, submitFunc}) => {
+const Sidebar = ({data,filteredData,toggleCheck,genericToggle, submitFunc}) => {
 
 
   let sourcesArr=['abc-news','new-york-times','bloomberg','bbc-news','fox-news',
-  'msnbc','breitbart-news','al-jazeera-english','cnn','politico','cnbc']
-
-  let selectedSources=[]
-
-
-
+  'msnbc','breitbart-news','al-jazeera-english','cnn','politico','cnbc','associated-press',]
 
 
 

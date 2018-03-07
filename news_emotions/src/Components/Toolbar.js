@@ -4,11 +4,11 @@ import '../App.css'
 import Sidebar from './Sidebar'
 
 
-const Toolbar = ({data, genericToggle, submitFunc}) => {
+const Toolbar = ({data, filteredData, genericToggle, submitFunc}) => {
   return (
    <div className='toolbar'>
      <div>
-       <Sidebar data={data} genericToggle={genericToggle} submitFunc={submitFunc} />
+       <Sidebar data={data} filteredData={filteredData} genericToggle={genericToggle} submitFunc={submitFunc} />
    </div>
    Toolbar
  </div>
