@@ -4,6 +4,9 @@ var port = process.env.PORT || 3000
 var knex = require('./knex')
 var cors = require('cors')
 app.use(cors())
+var bodyParser = require('body-parser')
+app.use(bodyParser.json())
+
 let date = new Date().toISOString().substr(0, 10)
 var oneWeekAgo = new Date()
 oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
@@ -18,20 +21,22 @@ var natural_language_understanding = new NaturalLanguageUnderstandingV1({
 const NewsAPI = require('newsapi')
 const newsapi = new NewsAPI('40d18741d48340a8b71eeea34d6ee852')
 
-
-
-
-
-app.listen(port,function(){
-  console.log(`listening on port ${port}`);
+app.listen(port, function() {
+  console.log(`listening on port ${port}`)
 })
 
-app.get('/watson',function(req,res,next){
-let sourceArr = []
+app.post('/watson', function(req, res, next) {
+  //submit and page load hits this route
+  let sourceArr = []
+  console.log(req.body.id, 'reqbody')
+  let body = req.body.id
+  if (body.length === 0) {
+    body = 'associated-press'
+  }
   async function getNews() {
     newsapi.v2
       .everything({
-        sources: 'the-new-york-times',
+        sources: `${body}`,
         from: `${weekAgo}`,
         to: `${date}`,
         language: 'en',
@@ -43,6 +48,7 @@ let sourceArr = []
         response.articles.forEach(source => {
           sourceArr.push(source)
         })
+        console.log(sourceArr)
         await getEmotions(sourceArr)
       })
   }
@@ -73,12 +79,8 @@ let sourceArr = []
       })
     }
     setTimeout(function() {
-
-      // this.setState({data:sourceArr})
-      console.log('sourceARr',sourceArr)
-      res.send(sourceArr)
-
-
+      console.log('sourceARr', sourceArr)
+      res.json(sourceArr)
     }, 2000)
   }
 
@@ -89,5 +91,4 @@ let sourceArr = []
 
   //handleSignUp
   //ajax POST
-
 })
