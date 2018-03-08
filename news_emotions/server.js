@@ -26,14 +26,14 @@ app.listen(port, function() {
 })
 
 app.post('/watson', function(req, res, next) {
-  //submit and page load hits this route
   let sourceArr = []
+  //submit and page load hits this route
   console.log(req.body.id, 'reqbody')
   let body = req.body.id
   if (body.length === 0) {
     body = 'associated-press'
   }
-  async function getNews() {
+  function getNews() {
     newsapi.v2
       .everything({
         sources: `${body}`,
@@ -42,14 +42,13 @@ app.post('/watson', function(req, res, next) {
         language: 'en',
         sortBy: 'publishedAt',
         page: 1,
-        pageSize: 10
+        pageSize: 20
       })
-      .then(async response => {
+      .then(response => {
         response.articles.forEach(source => {
           sourceArr.push(source)
         })
-        console.log(sourceArr)
-        await getEmotions(sourceArr)
+      getEmotions(sourceArr)
       })
   }
 
@@ -68,6 +67,7 @@ app.post('/watson', function(req, res, next) {
         }
       }
     }
+
     for (let i = 0; i < sourceArr.length; i++) {
       parameters['url'] = `${sourceArr[i].url}`
       natural_language_understanding.analyze(parameters, function(
@@ -75,13 +75,25 @@ app.post('/watson', function(req, res, next) {
         response
       ) {
         if (err) console.log('error:', err)
-        else sourceArr[i]['emotion'] = response.entities[0].emotion
+
+        else{
+
+          if(response.entities[0]){
+            sourceArr[i]['emotion'] = response.entities[0].emotion
+          }
+          }
+
       })
     }
     setTimeout(function() {
       console.log('sourceARr', sourceArr)
       res.json(sourceArr)
     }, 2000)
+
+
+
+    // res.status(200).json(sourceArr)
+
   }
 
   getNews()

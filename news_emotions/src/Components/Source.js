@@ -15,7 +15,7 @@ const Source = ({filteredData,title,author,description,url,publishedAt,joy,fear,
       <div className='title'>{title}</div>
       <div className='author'>{author}</div>
       <div className='description'>{description}</div>
-      <a href={url} className='url'>{url}</a>
+      <a href={url} target="_blank" className='url'>{url}</a>
       <div className='publishedAt'>{publishedAt}</div>
     <div className='emotions'>
       <div className='joy'>joy {joy}</div>

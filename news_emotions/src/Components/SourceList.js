@@ -7,7 +7,7 @@ const SourceList = ({ filteredData }) => {
   return (
     <div className="sourcelist">
       sourcelist
-      {filteredData.map(el => {
+      {filteredData.map(el=> {
         if(!el.emotion)return''
         return (
           <div>

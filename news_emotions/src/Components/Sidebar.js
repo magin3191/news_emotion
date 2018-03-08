@@ -12,11 +12,13 @@ import $ from 'jquery';
 
 
 
-const Sidebar = ({data,filteredData,toggleCheck,genericToggle, submitFunc}) => {
+const Sidebar = ({data,filteredData,toggleCheck,genericToggle, submitFunc, selectAll,checkedIt,sourceIds}) => {
 
 
-  let sourcesArr=['abc-news','new-york-times','bloomberg','bbc-news','fox-news',
-  'msnbc','breitbart-news','al-jazeera-english','cnn','politico','cnbc','associated-press',]
+  let sourcesArr=['abc-news','new-york-times'
+  // 'bloomberg','bbc-news','fox-news',
+  // 'msnbc','breitbart-news','al-jazeera-english','cnn','politico','cnbc','associated-press',]
+]
 
 
 
@@ -30,17 +32,18 @@ const Sidebar = ({data,filteredData,toggleCheck,genericToggle, submitFunc}) => {
       <SideNavItem
       />
       Sources
-      <SideNavItem>
 
+      <SideNavItem>
+        <button onClick={selectAll}>Select All</button>
         <form className='sidenav' onSubmit={submitFunc} >
-        {sourcesArr.map((el,i)=>{//onchange for each element to set checked=true
-          //sourceArr=sourceArr.filter() to remove items that arent checked. Then, setState().
+        {sourceIds.map((el,i)=>{
+
           return(
             <div className='checkBoxItems'>
-              <input type="checkbox" id={i}  value ={el} onChange={(event)=>
+              <input type="checkbox" id={i} value ={el.name} checked={el.selected} onChange={(event)=>
                 genericToggle(event)
               } />
-              <label for={i}>{el.split('-').join(' ')}</label>
+              <label for={i}>{el.name}</label>
               <br />
             </div>
           )
