@@ -20,18 +20,18 @@ class App extends Component {
       filteredData: [],
       sourceIds: [
         { name: 'ABC News', id: 'abc-news', selected: false },
-        { name: 'New York Times', id: 'new-york-times', selected: false },
-        { name: 'BBC', id: 'bbc-news', selected: false },
-        { name: 'Bloomberg', id: 'bloomberg', selected: false },
-        { name: 'CNN', id: 'cnn', selected: false },
-        { name: 'Fox News', id: 'fox-news', selected: false },
-        { name: 'MSNBC', id: 'new-york-times', selected: false },
-        { name: 'Brietbart', id: 'breitbart-news', selected: false },
-        { name: 'Al Jazeera English',id: 'al-jazeera-english',selected: false},
-        { name: 'New York Times', id: 'new-york-times', selected: false },
-        { name: 'Associated Press', id: 'associated-press', selected: false },
-        { name: 'CNBC', id: 'cnbc', selected: false },
-        { name: 'Politico', id: 'politico', selected: false }
+        { name: 'New York Times', id: 'new-york-times', selected: false }
+        // { name: 'BBC', id: 'bbc-news', selected: false },
+        // { name: 'Bloomberg', id: 'bloomberg', selected: false },
+        // { name: 'CNN', id: 'cnn', selected: false },
+        // { name: 'Fox News', id: 'fox-news', selected: false },
+        // { name: 'MSNBC', id: 'new-york-times', selected: false },
+        // { name: 'Brietbart', id: 'breitbart-news', selected: false },
+        // { name: 'Al Jazeera English',id: 'al-jazeera-english',selected: false},
+        // { name: 'New York Times', id: 'new-york-times', selected: false },
+        // { name: 'Associated Press', id: 'associated-press', selected: false },
+        // { name: 'CNBC', id: 'cnbc', selected: false },
+        // { name: 'Politico', id: 'politico', selected: false }
       ],
       filteredIds: []
     }
@@ -49,7 +49,6 @@ class App extends Component {
       })
     })
     const json1 = await response.json()
-    console.log(json1, 'json1')
     this.setState({
       data: json1
     })
@@ -58,10 +57,37 @@ class App extends Component {
   genericToggle = event => {
     let sourceIds = this.state.sourceIds.slice(0)
     sourceIds.map(ele => {
-      if (ele.id === event.target.value) ele.selected = !ele.selected
+      console.log(ele.id,event.target.value);
+      let eleId = ele.id.split('-').join(' ')
+      let etv = event.target.value.toLowerCase()
+      if (eleId === etv) ele.selected = !ele.selected
     })
     this.setState({ sourceIds: sourceIds })
+  }
 
+  selectAll = () => {
+    let selectedArr = this.state.sourceIds.slice(0)
+    function isSelected(ele) {
+      return ele.selected
+    }
+
+    if (selectedArr.every(isSelected)) {
+      selectedArr.forEach(ele => {
+        ele['selected'] = false
+      })
+
+      console.log(selectedArr)
+      this.setState({ sourceIds: selectedArr })
+    } else {
+      console.log('not all selected')
+      selectedArr.forEach(ele => {
+        ele['selected'] = true
+      })
+      console.log(selectedArr)
+      this.setState({ sourceIds: selectedArr }, function() {
+        console.log(this.state.sourceIds)
+      })
+    }
   }
 
   submitFunc = async e => {
@@ -87,7 +113,6 @@ class App extends Component {
     this.setState({
       filteredData: json2
     })
-    console.log(this.state.filteredData);
 
     return filteredIds
   }
@@ -115,7 +140,10 @@ class App extends Component {
                 data={this.state.data}
                 genericToggle={this.genericToggle}
                 submitFunc={this.submitFunc}
+                selectAll={this.selectAll}
                 filteredData={this.state.filteredData}
+                checkedIt={this.checkedIt}
+                sourceIds={this.state.sourceIds}
               />
               <SourceList filteredData={this.state.filteredData} />
             </div>
