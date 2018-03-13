@@ -15,10 +15,7 @@ import $ from 'jquery';
 const Sidebar = ({data,filteredData,toggleCheck,genericToggle, submitFunc, selectAll,checkedIt,sourceIds}) => {
 
 
-  let sourcesArr=['abc-news','new-york-times'
-  // 'bloomberg','bbc-news','fox-news',
-  // 'msnbc','breitbart-news','al-jazeera-english','cnn','politico','cnbc','associated-press',]
-]
+
 
 
 
