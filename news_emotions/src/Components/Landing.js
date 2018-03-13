@@ -6,11 +6,11 @@ import '../App.css'
 
 const Landing = ({handleSignIn,handleSignUp}) => {
   return (
-    <div ClassName='signInPage'>
+    <div className='signInPage'>
     <div>News Interpreter</div>
   <form onSubmit={handleSignIn}>
-    <Input placeholder="Username" s={6} label="Username" />
-    <Input type="password" label="password" s={12} />
+    <Input className='username' name='username' placeholder="Username" s={6} label="Username" />
+    <Input className='password' name='password' type="password" label="password" s={12} />
     <Button className='signInButton' waves='light'>
                 Sign In
     </Button>
@@ -20,10 +20,12 @@ const Landing = ({handleSignIn,handleSignUp}) => {
   </form>
   <Collapsible>
   <CollapsibleItem header='Sign Up'>
-    <form onSubmit={handleSignIn}>
-      <Input placeholder="Pick a Username" s={6} label="Username" />
-      <Input type="password" label="password" s={12} />
-      <Button className='signInButton' waves='light'>
+    <form onSubmit={handleSignUp}>
+      <Input className='username' placeholder="Pick a Username" name = 'username' s={10} label="Username" />
+      <Input className='password' type="password" label="password" placeholder='Password' name='password' s={12} validate />
+      <Input className='confirmPassword' placeholder='Confirm Password' label='ConfirmPassword' name='confirmPassword' type='password' name="confirmPassword" s={12} validate></Input>
+
+      <Button type = 'submit' className='signInButton' waves='light'>
                   Sign Up
                 </Button>
     </form>

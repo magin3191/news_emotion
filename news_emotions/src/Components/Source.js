@@ -18,11 +18,11 @@ const Source = ({filteredData,title,author,description,url,publishedAt,joy,fear,
       <a href={url} target="_blank" className='url'>{url}</a>
       <div className='publishedAt'>{publishedAt}</div>
     <div className='emotions'>
-      <div className='joy'>joy {joy}</div>
-      <div className='sadness'>sadness {sadness}</div>
-      <div className='fear'>fear {fear}</div>
-      <div className='anger'>anger {anger}</div>
-      <div className='disgust'>disgust {disgust}</div>
+      <div className='joy' id='joy'>joy {joy}</div>
+      <div className='sadness' id='sadness'>sadness {sadness}</div>
+      <div className='fear' id='fear'>fear {fear}</div>
+      <div className='anger' id='anger'>anger {anger}</div>
+      <div className='disgust' id='disgust'>disgust {disgust}</div>
     </div>
 
     </div>

@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { Navbar, NavItem } from 'react-materialize'
+import { Navbar, NavItem, Button, Dropdown } from 'react-materialize'
 import '../App.css'
 import Sidebar from './Sidebar'
+import Sorting from './Sorting'
+
 
 const Toolbar = ({
   data,
@@ -10,11 +12,12 @@ const Toolbar = ({
   submitFunc,
   selectAll,
   checkedIt,
-  sourceIds
+  sourceIds,
+  sortFunc
 }) => {
   return (
     <div className="toolbar">
-      <div>
+
         <Sidebar
           data={data}
           filteredData={filteredData}
@@ -23,10 +26,15 @@ const Toolbar = ({
           selectAll={selectAll}
           checkedIt={checkedIt}
           sourceIds={sourceIds}
+
         />
-      </div>
-      Toolbar
+        <Sorting sortFunc={sortFunc} />
+
+
+
     </div>
+
+
   )
 }
 

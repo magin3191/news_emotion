@@ -3,12 +3,14 @@ import { Navbar, NavItem } from 'react-materialize'
 import '../App.css'
 import Source from './Source'
 
-const SourceList = ({ filteredData }) => {
+const SourceList = ({ filteredData ,sortFunc}) => {
+
+console.log(filteredData,'jkljkl');
   return (
     <div className="sourcelist">
       sourcelist
       {filteredData.map(el=> {
-        if(!el.emotion)return''
+        if(el.emotion)
         return (
           <div>
             <Source
@@ -23,7 +25,6 @@ const SourceList = ({ filteredData }) => {
               fear={(el.emotion.fear)}
               sadness={(el.emotion.sadness)}
               disgust={(el.emotion.disgust)}
-
             />
           </div>
         )

@@ -2,8 +2,11 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('users_sources',function(table){
     table.increments('id')
-    table.integer('user_id')
-    table.foreign('user_id').reference('id').inTable('user').onDelete('CASECADE')
+    table.integer('users_id')
+    table.foreign('users_id').references('id').inTable('users')
+    table.integer('source_id')
+    table.foreign('source_id').references('id').inTable('source')
+    // table.foreign('users_id').references('id').inTable('users').onDelete('CASECADE')
   })
 };
 
