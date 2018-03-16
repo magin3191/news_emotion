@@ -6,7 +6,7 @@ import '../App.css'
 const Header = () =>{
 
     return (<Navbar brand='NewsEmotion' center>
-  <NavItem href='components.html'>Log Out</NavItem>
+  <NavItem href='/'>Log Out</NavItem>
 </Navbar>);
 
 }

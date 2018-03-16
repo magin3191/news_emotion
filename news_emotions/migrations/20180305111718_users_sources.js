@@ -6,7 +6,6 @@ exports.up = function(knex, Promise) {
     table.foreign('users_id').references('id').inTable('users')
     table.integer('source_id')
     table.foreign('source_id').references('id').inTable('source')
-    // table.foreign('users_id').references('id').inTable('users').onDelete('CASECADE')
   })
 };
 

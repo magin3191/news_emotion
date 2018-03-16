@@ -10,7 +10,7 @@ import '../App.css'
 import getNews from '../App.js'
 import $ from 'jquery'
 
-const Sorting = ({sortFunc, filteredData}) => {
+const Sorting = ({sortFunc, filteredData, filteredIds}) => {
   return (
     <div className="sorting">
       <form action="#" onSubmit={sortFunc}>
@@ -44,7 +44,7 @@ const Sorting = ({sortFunc, filteredData}) => {
             <input name="group1" type="radio" value='acsending' id="Acsending" />
             <label for="Acsending">Acsending</label>
 
-            <input name="group1" type="radio" value='decsending' id="Decsending" checked />
+            <input name="group1" type="radio" value='decsending' id="Decsending" />
             <label for="Decsending">Decsending</label>
 
 
