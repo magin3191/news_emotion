@@ -1,10 +1,27 @@
 // import React from 'react'
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter,
+  Switch
+} from 'react-router-dom'
+import {
+  Navbar,
+  NavItem,
+  Row,
+  Input,
+  Button,
+  Collapsible,
+  CollapsibleItem
+} from 'react-materialize'
 import logo from './logo.svg'
 import './App.css'
 import $ from 'jquery'
+import { collapsible } from 'jquery'
 import Header from './Components/Header'
 import Landing from './Components/Landing'
 import SourceList from './Components/SourceList'
@@ -21,22 +38,25 @@ class App extends Component {
       filteredData: [], //data that is displayed on sourcelist
       sourceIds: [
         { name: 'ABC News', id: 'abc-news', selected: false },
-        // { name: 'BBC', id: 'bbc-news', selected: false }
+        { name: 'BBC News', id: 'bbc-news', selected: false }
         // { name: 'New York Times', id: 'new-york-times', selected: false },
-        { name: 'Bloomberg', id: 'bloomberg', selected: false },
+        // { name: 'Bloomberg', id: 'bloomberg', selected: false },
         // { name: 'CNN', id: 'cnn', selected: false },
-        { name: 'Fox News', id: 'fox-news', selected: false }
-        // { name: 'MSNBC', id: 'new-york-times', selected: false },
-        // { name: 'Brietbart', id: 'breitbart-news', selected: false },
+        // { name: 'Fox News', id: 'fox-news', selected: false },
+        // // { name: 'MSNBC', id: 'new-york-times', selected: false },
+        // { name: 'Breitbart News', id: 'breitbart-news', selected: false },
         // { name: 'Al Jazeera English',id: 'al-jazeera-english',selected: false},
-        // { name: 'New York Times', id: 'new-york-times', selected: false },
+        // // { name: 'New York Times', id: 'new-york-times', selected: false },
         // { name: 'Associated Press', id: 'associated-press', selected: false },
         // { name: 'CNBC', id: 'cnbc', selected: false },
         // { name: 'Politico', id: 'politico', selected: false }
       ],
-      filteredIds: []
+      filteredIds: [],
+      isAuthenticated : false,
     }
   }
+
+
 
   async componentDidMount() {
     const response = await fetch('http://localhost:3000/watson', {
@@ -113,7 +133,7 @@ class App extends Component {
     const json2 = await response.json()
     this.setState({
       filteredData: json2
-    })
+    }) //patch to userdb
     console.log(json2, 'json2')
     return filteredIds
   }
@@ -124,6 +144,7 @@ class App extends Component {
     emo = $('input[name=emo]:checked').val()
   ) => {
     e.preventDefault()
+    if (!this.state.filteredData) return
     let emoSelector = `${emo}`
     $('.emotions')
       .children()
@@ -140,7 +161,7 @@ class App extends Component {
     this.setState({ filteredData: sortArr })
   }
 
-  async handleSignUp(e) {
+  async handleSignUp(e, handleSignIn) {
     e.preventDefault()
     let username = e.target.username.value
     let password = e.target.password.value
@@ -149,6 +170,11 @@ class App extends Component {
       window.Materialize.toast('Password doesnt match', 3000)
       e.target.password.value = ''
       e.target.confirmPassword.value = ''
+      return
+    }
+    if (username.length === 0 || password.length === 0) {
+      window.Materialize.toast('No fields may be blank', 3000)
+      return
     }
     const response = await fetch('http://localhost:3000/users', {
       method: 'POST',
@@ -162,59 +188,67 @@ class App extends Component {
       }
     })
     if (response.status === 200) {
-      window.Materialize.toast('Account created', 2000)
-    }
-    else window.Materialize.toast('username taken', 2000)
+      $('#username').val(`${username}`)
+      $('#password').val(`${password}`)
+      // $('.collapsible').collapsible({
+      //   collapsed: true
+      // })
 
+      window.Materialize.toast('Account created', 2000)
+    } else window.Materialize.toast('username taken', 2000)
   }
 
-  async handleSignIn(e) {
-  e.preventDefault()
-  console.log('in post signin')
-  let username = e.target.username.value
-  let password = e.target.password.value
-  console.log(username, password)
+   handleSignIn = async(e) => {
+    e.preventDefault()
+    let username = e.target.username.value
+    let password = e.target.password.value
     const response = await fetch('http://localhost:3000/login', {
       method: 'POST',
-      body: JSON.stringify({username: username, password: password}),
+      body: JSON.stringify({ username: username, password: password }),
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json'
       }
     })
-    console.log(response)
-    if(response.status !== 200) {
+    console.log(response.body)
+    if (response.status !== 200) {
+      console.log('not 200')
       window.Materialize.toast('please check your credentials', 3000)
       return
     }
     const user = await response.json()
-    if(response.status === 200) {
-      window.Materialize.toast('logged in', 3000)
+    if (response.status === 200) {
+      console.log('signed in ');
+      this.setState({isAuthenticated : true})
+      window.Materialize.toast('logged in', 1000)
       localStorage.setItem('token', user.token)
+
     }
-
-
-}
-
-
+  }
 
   render() {
+    // if (this.state.authenticated) {
+    //   return <Redirect to='/watson' />;
+    // }
+    console.log('is authenticated', this.state.isAuthenticated);
     return (
-      <div className="App">
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <div>
-              <Landing handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} />
-            </div>
-          )}
-        />
-
-        <Route
-          exact
-          path="/watson"
-          render={() => (
+      <div>
+      <Router>
+        <div className="App">
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <div>
+                <Landing
+                  handleSignUp={this.handleSignUp}
+                  handleSignIn={this.handleSignIn}
+                  isAuthenticated={this.state.isAuthenticated}
+                />
+              </div>
+            )}
+          />
+          <Route path= '/watson' render = {() => (
             <div>
               <Header />
               <Toolbar
@@ -226,12 +260,39 @@ class App extends Component {
                 checkedIt={this.checkedIt}
                 sourceIds={this.state.sourceIds}
                 sortFunc={this.sortFunc}
+                filteredIds={this.state.filteredIds}
               />
               <SourceList filteredData={this.state.filteredData} />
             </div>
-          )}
-        />
-      </div>
+          )} />
+          </div>
+        </Router>
+        </div>
+        /* {this.state.authenticated ?
+        // <Route
+        //   exact
+        //   path="/watson"
+        //   render={() => (
+            <div>
+              <Header />
+              <Toolbar
+                data={this.state.data}
+                genericToggle={this.genericToggle}
+                submitFunc={this.submitFunc}
+                selectAll={this.selectAll}
+                filteredData={this.state.filteredData}
+                checkedIt={this.checkedIt}
+                sourceIds={this.state.sourceIds}
+                sortFunc={this.sortFunc}
+                filteredIds={this.state.filteredIds}
+              />
+              <SourceList filteredData={this.state.filteredData} />
+            </div>
+          // )}
+        // />
+        : null }
+      </Router> */
+
     )
   }
 }

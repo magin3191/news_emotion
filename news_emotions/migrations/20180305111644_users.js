@@ -4,7 +4,6 @@ exports.up = function(knex, Promise) {
     table.increments('id')
     table.string('username').unique()
     table.string('password')
-    table.string('salt',30)
     table.timestamps(true, true)
   })
 };

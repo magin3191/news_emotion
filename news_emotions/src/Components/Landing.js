@@ -1,24 +1,30 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Link, Redirect,
+withRouter } from 'react-router-dom'
 import {Navbar, NavItem, Row, Input, Button, Collapsible, CollapsibleItem} from 'react-materialize'
 import Header from '../Components/Header'
 import '../App.css'
 
 
-const Landing = ({handleSignIn,handleSignUp}) => {
+const Landing = ({handleSignIn,handleSignUp,isAuthenticated}) => {
   return (
     <div className='signInPage'>
     <div>News Interpreter</div>
+    {isAuthenticated ? <Redirect to ='/watson'/> :
   <form onSubmit={handleSignIn}>
-    <Input className='username' name='username' placeholder="Username" s={6} label="Username" />
-    <Input className='password' name='password' type="password" label="password" s={12} />
+    <Input className='username' id='username' name='username' placeholder="Username" s={6} label="Username" />
+    <Input className='password' id='password' name='password' type="password" label="password" s={12} />
+
     <Button className='signInButton' waves='light'>
                 Sign In
     </Button>
+    <Link to = '/'>
     <Button className='logoutButton' waves='light'>
                 Log Out
     </Button>
-  </form>
-  <Collapsible>
+  </Link>
+  </form>}
+  <Collapsible className='collapsible'>
   <CollapsibleItem header='Sign Up'>
     <form onSubmit={handleSignUp}>
       <Input className='username' placeholder="Pick a Username" name = 'username' s={10} label="Username" />
