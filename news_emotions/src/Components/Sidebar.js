@@ -23,15 +23,15 @@ const Sidebar = ({data,filteredData,toggleCheck,genericToggle, submitFunc, selec
   return (
 
     <SideNav
-      trigger={<Button>Select Sources</Button>}
+      trigger={<Button id='selectSourcesbtn'>Select Sources</Button>}
       options={{ closeOnClick: false }}
     >
       <SideNavItem
       />
-      Sources
+
 
       <SideNavItem>
-        <button onClick={selectAll}>Select All</button>
+        <button id='selectAllbtn' onClick={selectAll}>Select All</button>
         <form className='sidenav' onSubmit={submitFunc} >
         {sourceIds.map((el,i)=>{
 

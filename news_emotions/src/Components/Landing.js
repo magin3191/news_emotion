@@ -9,11 +9,11 @@ import '../App.css'
 const Landing = ({handleSignIn,handleSignUp,isAuthenticated}) => {
   return (
     <div className='signInPage'>
-    <div>News Interpreter</div>
+    <div id='frontTitle'>News Interpreter</div>
     {isAuthenticated ? <Redirect to ='/watson'/> :
   <form onSubmit={handleSignIn}>
-    <Input className='username' id='username' name='username' placeholder="Username" s={6} label="Username" />
-    <Input className='password' id='password' name='password' type="password" label="password" s={12} />
+    <Input className='username' id='username' name='username' s={6} label="Username" />
+    <Input className='password' id='password' name='password'  type="password" label="password" s={12} />
 
     <Button className='signInButton' waves='light'>
                 Sign In
@@ -25,7 +25,7 @@ const Landing = ({handleSignIn,handleSignUp,isAuthenticated}) => {
   </Link>
   </form>}
   <Collapsible className='collapsible'>
-  <CollapsibleItem header='Sign Up'>
+  <CollapsibleItem header='Sign Up' id='signup'>
     <form onSubmit={handleSignUp}>
       <Input className='username' placeholder="Pick a Username" name = 'username' s={10} label="Username" />
       <Input className='password' type="password" label="password" placeholder='Password' name='password' s={12} validate />
