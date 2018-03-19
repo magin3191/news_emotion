@@ -52,6 +52,14 @@ app.post('/users', function(req, res, next) {
     })
 })
 
+app.patch('/watson',function(req,res,next){
+  console.log(req.body.filteredIds);
+  knex('sources')
+  .insert([req.body.filteredIds])
+
+})
+
+
 app.post('/login', function(req, res, next) {
   knex
     .select('*')

@@ -3,7 +3,7 @@ import { Navbar, NavItem } from 'react-materialize'
 import '../App.css'
 import Source from './Source'
 
-const SourceList = ({ filteredData, sortFunc }) => {
+const SourceList = ({ filteredData, sortFunc, onClickSort }) => {
   let selectSource = !filteredData.length ? 'Sources Listed Here' : ''
   return (
     <div className="sourcelist">
@@ -25,6 +25,7 @@ const SourceList = ({ filteredData, sortFunc }) => {
                 fear={el.emotion.fear}
                 sadness={el.emotion.sadness}
                 disgust={el.emotion.disgust}
+                onClickSort={onClickSort}
               />
             </div>
           )
