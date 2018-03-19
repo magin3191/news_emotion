@@ -5,8 +5,8 @@ import '../App.css'
 
 const Header = () =>{
 
-    return (<Navbar id='navbar' brand='NewsEmotion' center>
-  <NavItem id='logOut' href='/'>Log Out</NavItem>
+    return (<Navbar id='navbar' brand='TheNewsInterpreter' center>
+  <NavItem id='logOut' href='/' onClick={()=>{localStorage.removeItem("username")}}>Log Out</NavItem>
 </Navbar>);
 
 }

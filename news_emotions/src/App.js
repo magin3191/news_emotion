@@ -108,11 +108,11 @@ class App extends Component {
     }
   }
 
-  submitFunc = async e => {
+  submitFunc = async (e) => {
     e.preventDefault()
     $('.emotions')
       .children()
-      .css('background-color', 'white')
+      .css('background-color', '#DDDDDD')
     let sourceIds = this.state.sourceIds.slice(0)
     let filteredIds = []
     for (let i = 0; i < sourceIds.length; i++) {
@@ -134,17 +134,51 @@ class App extends Component {
     this.setState({
       filteredData: json2
     }) //patch to userdb
-    console.log(json2, 'json2')
+    let username = localStorage.getItem('username')
+    const response1 = await fetch('http://localhost:3000/watson', {
+      method: 'PATCH',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        filteredIds: this.state.filteredIds,
+        username: username
+      })
+    })
     return filteredIds
   }
 
   //calback patch request for submitfunc
 
 
+
+onClickSort = (e, upDown
+)=>{
+  e.preventDefault()
+  upDown = $('input[name=group1]:checked').val()
+  let emo = e.target.id
+  let filteredData = this.state.filteredData.slice(0)
+  $(`#${emo}`).prop("checked", true)
+  $('.emotions')
+    .children()
+    .css('background-color', '#DDDDDD')
+  $(`.${emo}`).css('background-color', '#a2b9bc')
+
+  let sortArr = filteredData.sort(function(a, b) {
+    if (a.emotion && b.emotion) {
+      if (upDown === 'acsending') return a.emotion[emo] - b.emotion[emo]
+      if (upDown === 'decsending') return b.emotion[emo] - a.emotion[emo]
+    }
+  })
+this.setState({ filteredData: sortArr })
+}
+
+
   sortFunc = (
     e,
     upDown = $('input[name=group1]:checked').val(),
-    emo = $('input[name=emo]:checked').val()
+    emo =  $('input[name=emo]:checked').val()
   ) => {
     e.preventDefault()
     if (!this.state.filteredData) return
@@ -164,7 +198,7 @@ class App extends Component {
     this.setState({ filteredData: sortArr })
   }
 
-  async handleSignUp(e, handleSignIn) {
+  async handleSignUp(e) {
     e.preventDefault()
     let username = e.target.username.value
     let password = e.target.password.value
@@ -193,9 +227,7 @@ class App extends Component {
     if (response.status === 200) {
       $('#username').val(`${username}`)
       $('#password').val(`${password}`)
-      // $('.collapsible').collapsible({
-      //   collapsed: true
-      // })
+
 
       window.Materialize.toast('Account created', 2000)
     } else window.Materialize.toast('username taken', 2000)
@@ -225,14 +257,13 @@ class App extends Component {
       this.setState({isAuthenticated : true})
       window.Materialize.toast('logged in', 1000)
       localStorage.setItem('token', user.token)
+      localStorage.setItem('username',username)
 
     }
   }
 
   render() {
-    // if (this.state.authenticated) {
-    //   return <Redirect to='/watson' />;
-    // }
+
     console.log('is authenticated', this.state.isAuthenticated);
     return (
       <div>
@@ -265,7 +296,8 @@ class App extends Component {
                 sortFunc={this.sortFunc}
                 filteredIds={this.state.filteredIds}
               />
-              <SourceList filteredData={this.state.filteredData} />
+              <SourceList filteredData={this.state.filteredData}
+              onClickSort={this.onClickSort} />
             </div>
           )} />
           </div>

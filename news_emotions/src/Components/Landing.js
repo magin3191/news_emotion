@@ -9,7 +9,7 @@ import '../App.css'
 const Landing = ({handleSignIn,handleSignUp,isAuthenticated}) => {
   return (
     <div className='signInPage'>
-    <div id='frontTitle'>News Interpreter</div>
+    <div id='frontTitle'>TheNewsInterpreter</div>
     {isAuthenticated ? <Redirect to ='/watson'/> :
   <form onSubmit={handleSignIn}>
     <Input className='username' id='username' name='username' s={6} label="Username" />

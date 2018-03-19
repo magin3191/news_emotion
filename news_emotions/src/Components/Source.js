@@ -5,7 +5,7 @@ import '../App.css'
 
 
 
-const Source = ({filteredData,title,author,description,url,publishedAt,joy,fear,anger,disgust,sadness}) => {
+const Source = ({filteredData,title,author,description,url,publishedAt,joy,fear,anger,disgust,sadness, onClickSort}) => {
 
 
 
@@ -17,7 +17,7 @@ const Source = ({filteredData,title,author,description,url,publishedAt,joy,fear,
       <div className='description'>{description}</div>
       <a href={url} target="_blank" className='url'>{url}</a>
       <div className='publishedAt'>{publishedAt}</div>
-    <div className='emotions'>
+    <div className='emotions' onClick={onClickSort} >
       <div className='joy' id='joy'>joy {joy}</div>
       <div className='sadness' id='sadness'>sadness {sadness}</div>
       <div className='fear' id='fear'>fear {fear}</div>
