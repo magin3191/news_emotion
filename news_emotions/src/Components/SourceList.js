@@ -4,7 +4,7 @@ import '../App.css'
 import Source from './Source'
 
 const SourceList = ({ filteredData, sortFunc }) => {
-  let selectSource = !filteredData.length ? 'Select Sources' : ''
+  let selectSource = !filteredData.length ? 'Sources Listed Here' : ''
   return (
     <div className="sourcelist">
       {selectSource}

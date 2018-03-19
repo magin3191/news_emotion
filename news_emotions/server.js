@@ -60,7 +60,7 @@ app.post('/login', function(req, res, next) {
       username: req.body.username
     })
     .then(function(user) {
-      let theUser=user
+      let theUser = user
       // console.log(user, 'user') //empty array
       if (!user) {
         res.status(401).send('User doesnt exist')

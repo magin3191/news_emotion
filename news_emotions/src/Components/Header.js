@@ -5,8 +5,8 @@ import '../App.css'
 
 const Header = () =>{
 
-    return (<Navbar brand='NewsEmotion' center>
-  <NavItem href='/'>Log Out</NavItem>
+    return (<Navbar id='navbar' brand='NewsEmotion' center>
+  <NavItem id='logOut' href='/'>Log Out</NavItem>
 </Navbar>);
 
 }

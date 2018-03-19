@@ -38,18 +38,18 @@ class App extends Component {
       filteredData: [], //data that is displayed on sourcelist
       sourceIds: [
         { name: 'ABC News', id: 'abc-news', selected: false },
-        { name: 'BBC News', id: 'bbc-news', selected: false }
+        { name: 'BBC News', id: 'bbc-news', selected: false },
+        { name: 'New York Times', id: 'new-york-times', selected: false },
+        { name: 'Bloomberg', id: 'bloomberg', selected: false },
+        { name: 'CNN', id: 'cnn', selected: false },
+        { name: 'Fox News', id: 'fox-news', selected: false },
+        // { name: 'MSNBC', id: 'new-york-times', selected: false },
+        { name: 'Breitbart News', id: 'breitbart-news', selected: false },
+        { name: 'Al Jazeera English',id: 'al-jazeera-english',selected: false},
         // { name: 'New York Times', id: 'new-york-times', selected: false },
-        // { name: 'Bloomberg', id: 'bloomberg', selected: false },
-        // { name: 'CNN', id: 'cnn', selected: false },
-        // { name: 'Fox News', id: 'fox-news', selected: false },
-        // // { name: 'MSNBC', id: 'new-york-times', selected: false },
-        // { name: 'Breitbart News', id: 'breitbart-news', selected: false },
-        // { name: 'Al Jazeera English',id: 'al-jazeera-english',selected: false},
-        // // { name: 'New York Times', id: 'new-york-times', selected: false },
-        // { name: 'Associated Press', id: 'associated-press', selected: false },
-        // { name: 'CNBC', id: 'cnbc', selected: false },
-        // { name: 'Politico', id: 'politico', selected: false }
+        { name: 'Associated Press', id: 'associated-press', selected: false },
+        { name: 'CNBC', id: 'cnbc', selected: false },
+        { name: 'Politico', id: 'politico', selected: false }
       ],
       filteredIds: [],
       isAuthenticated : false,
@@ -138,6 +138,9 @@ class App extends Component {
     return filteredIds
   }
 
+  //calback patch request for submitfunc
+
+
   sortFunc = (
     e,
     upDown = $('input[name=group1]:checked').val(),
@@ -148,8 +151,8 @@ class App extends Component {
     let emoSelector = `${emo}`
     $('.emotions')
       .children()
-      .css('background-color', 'white')
-    $(`.${emoSelector}`).css('background-color', 'red')
+      .css('background-color', '#DDDDDD')
+    $(`.${emoSelector}`).css('background-color', '#a2b9bc')
     let filteredData = this.state.filteredData.slice(0)
     let sortArr = filteredData.sort(function(a, b) {
       if (a.emotion && b.emotion) {

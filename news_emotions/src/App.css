@@ -1,5 +1,15 @@
 
+body{
+  font-family: 'Times New Roman';
+  background-color:#a2b9bc;
+  color:black;
+
+}
+
+
+
 .toolbar {
+  background-color: #a2b9bc;
   border: 1px outset black;
   padding:15px;
   margin-top:10px;
@@ -13,8 +23,10 @@
 }
 
 .sourcelist {
-
-  border: 1px outset pink;
+  background-color:#878f99;
+  opacity: .8;
+  font-size: 18px;
+  border: 3px solid #a2b9bc;
   margin-top: 10px;
   padding: 10px 5% 10px 5%
 }
@@ -24,6 +36,7 @@
 }
 
 .emo {
+  color:black;
   display: inline-flex;
   border-style: solid;
     border-width: 1px;
@@ -40,22 +53,19 @@ p{
   margin: 10px
 }
 
-.sortButton {
 
-
-
-
-}
 
 .selectedEmo{
-  background-color: #f44242
+  background-color: #f44242;
+
 }
 
 
 
 
 .source {
-  border: 1px outset black;
+  background-color: #DDDDDD;
+  border: 2px outset black;
       margin-bottom:10px;
       margin-top:10px;
       padding-top: 5%;
@@ -68,11 +78,91 @@ p{
 
 .emotions {
 border-style: solid;
-border-width: 1px;
+border-color: #30292F;
+border-width: 2px;
 margin-left: 40%;
-margin-right: 40%
+margin-right: 40%;
+
 
     }
+
+    .button{
+      background-color: #DDDDDD;
+      color:black;
+    }
+
+    #logOut{
+      color:black;
+      background-color: #DDDDDD;
+    }
+
+    #navbar{
+      color:black;
+      background-color: #878f99;
+
+    }
+
+    .sorting{
+      border: 2px outset black;
+      padding-right:7%;
+    }
+
+
+
+    button{
+      border: 1px outset black;
+
+    }
+
+
+    .signInButton{
+      background-color: #DDDDDD;
+      color:black;
+    }
+
+    #signup{
+    color: #a2b9bc
+    }
+
+    #frontTitle{
+      background-color: #878f99;
+      font-size: 26px;
+      color:#6b5b95;
+      border-style: solid;
+   border-width: 1px;
+
+    }
+
+    .logoutButton{
+      background-color: #DDDDDD;
+      color:black;
+    }
+
+    .emo{
+      border-radius: 10px;
+
+    }
+
+    .upOrDown{
+      border-radius: 10px;
+    }
+
+#selectAllbtn{
+      background-color: #DDDDDD;
+      color:black;
+    }
+
+#selectSourcesbtn{
+  background-color: #DDDDDD;
+  color:black;
+
+}
+
+
+.sortButton{
+  background-color: #DDDDDD;
+  color:black;
+}
 
   .title {
     font-size: 22px;
@@ -94,7 +184,7 @@ margin-right: 40%
 }
 
 .App-header {
-  background-color: #222;
+  background-color: #FCFCFC;
   height: 150px;
   padding: 20px;
   color: white;

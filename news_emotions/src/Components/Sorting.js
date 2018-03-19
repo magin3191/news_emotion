@@ -13,7 +13,7 @@ import $ from 'jquery'
 const Sorting = ({sortFunc, filteredData, filteredIds}) => {
   return (
     <div className="sorting">
-      <form action="#" onSubmit={sortFunc}>
+      <form id='sortForm' action="#" onSubmit={sortFunc}>
 
 
         <div className="emo">
