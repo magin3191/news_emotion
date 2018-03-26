@@ -39,17 +39,21 @@ class App extends Component {
       sourceIds: [
         { name: 'ABC News', id: 'abc-news', selected: false },
         { name: 'BBC News', id: 'bbc-news', selected: false },
-        { name: 'New York Times', id: 'new-york-times', selected: false },
+        { name: 'The New York Times', id: 'the-new-york-times', selected: false },
         { name: 'Bloomberg', id: 'bloomberg', selected: false },
         { name: 'CNN', id: 'cnn', selected: false },
         { name: 'Fox News', id: 'fox-news', selected: false },
-        // { name: 'MSNBC', id: 'new-york-times', selected: false },
+        { name: 'MSNBC', id: 'msnbc', selected: false },
         { name: 'Breitbart News', id: 'breitbart-news', selected: false },
         { name: 'Al Jazeera English',id: 'al-jazeera-english',selected: false},
-        // { name: 'New York Times', id: 'new-york-times', selected: false },
         { name: 'Associated Press', id: 'associated-press', selected: false },
         { name: 'CNBC', id: 'cnbc', selected: false },
-        { name: 'Politico', id: 'politico', selected: false }
+        { name: 'Politico', id: 'politico', selected: false },
+        { name: 'CBS', id: 'cbs-news', selected: false },
+        // { name: 'The Economist', id: 'the-economist', selected: false },
+        { name: 'Vice News', id: 'vice-news', selected: false }
+        // { name: 'Buzzfeed', id: 'buzzfeed', selected: false },
+        // { name: 'Independent', id: 'independent', selected: false }
       ],
       filteredIds: [],
       isAuthenticated : false,
@@ -76,6 +80,10 @@ class App extends Component {
       data: json1
     })
   }
+
+
+
+
 
   genericToggle = event => {
     let sourceIds = this.state.sourceIds.slice(0)
@@ -110,6 +118,7 @@ class App extends Component {
 
   submitFunc = async (e) => {
     e.preventDefault()
+    console.log(this,'this');
     $('.emotions')
       .children()
       .css('background-color', '#DDDDDD')
@@ -119,6 +128,7 @@ class App extends Component {
       if (sourceIds[i].selected) filteredIds.push(sourceIds[i].id)
     }
     this.setState({ filteredIds })
+    let username = localStorage.getItem('username')
 
     const response = await fetch('http://localhost:3000/watson', {
       method: 'POST',
@@ -127,25 +137,15 @@ class App extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        id: filteredIds
+        id: filteredIds,
+        username:username
       })
     })
     const json2 = await response.json()
     this.setState({
       filteredData: json2
     }) //patch to userdb
-    let username = localStorage.getItem('username')
-    const response1 = await fetch('http://localhost:3000/watson', {
-      method: 'PATCH',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        filteredIds: this.state.filteredIds,
-        username: username
-      })
-    })
+
     return filteredIds
   }
 
@@ -253,8 +253,9 @@ this.setState({ filteredData: sortArr })
     }
     const user = await response.json()
     if (response.status === 200) {
-      console.log('signed in ');
+      console.log('signed in ',user);
       this.setState({isAuthenticated : true})
+      this.setState({filteredData:user.sourceArr||[]})
       window.Materialize.toast('logged in', 1000)
       localStorage.setItem('token', user.token)
       localStorage.setItem('username',username)

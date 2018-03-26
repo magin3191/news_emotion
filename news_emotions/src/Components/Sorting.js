@@ -19,33 +19,33 @@ const Sorting = ({sortFunc, filteredData, filteredIds}) => {
         <div className="emo">
           <p>
             <input name="emo" type="radio" id="sadness" value='sadness' />
-            <label for="sadness">Sadness</label>
+            <label id='sadnessSort' for="sadness">Sadness</label>
           </p>
           <p>
             <input name="emo" type="radio" id="joy" value="joy" />
-            <label for="joy">Joy</label>
+            <label id='joySort' for="joy">Joy</label>
           </p>
           <p>
             <input name="emo" type="radio" id="fear" value="fear" onChange={()=>{
             }}/>
-            <label for="fear">Fear</label>
+            <label id='fearSort' for="fear">Fear</label>
           </p>
           <p>
             <input name="emo" type="radio" id="disgust" value="disgust" />
-            <label for="disgust">Disgust</label>
+            <label id='disgustSort' for="disgust">Disgust</label>
           </p>
           <p>
             <input name="emo" type="radio" id="anger" value="anger" />
-            <label for="anger">Anger</label>
+            <label id='angerSort' for="anger">Anger</label>
           </p>
         </div>
         <div className="upOrDown">
 
             <input name="group1" type="radio" value='acsending' id="Acsending" />
-            <label for="Acsending">Acsending</label>
+            <label id='acsendingSort' for="Acsending">Acsending</label>
 
             <input name="group1" type="radio" value='decsending' id="Decsending" />
-            <label for="Decsending">Decsending</label>
+            <label id='decsendingSort' for="Decsending">Descending</label>
 
 
         </div>

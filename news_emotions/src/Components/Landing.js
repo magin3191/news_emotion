@@ -31,11 +31,12 @@ const Landing = ({handleSignIn,handleSignUp,isAuthenticated}) => {
       <Input className='password' type="password" label="password" placeholder='Password' name='password' s={12} validate />
       <Input className='confirmPassword' placeholder='Confirm Password' label='ConfirmPassword' name='confirmPassword' type='password' name="confirmPassword" s={12} validate></Input>
 
-      <Button type = 'submit' className='signInButton' waves='light'>
+      <Button type = 'submit' id='signup' className='signInButton' waves='light'>
                   Sign Up
                 </Button>
     </form>
   </CollapsibleItem>
+  <CollapsibleItem id='about' header='About'>TheNewsInterpreter allows you to select news from your prefered sources and sort them based on their emotional sentiment via the IBM Watson-Developer-Cloud Natural Language Understanding API</CollapsibleItem>
 </Collapsible>
 </div>
 

@@ -82,6 +82,7 @@ border-color: #30292F;
 border-width: 2px;
 margin-left: 40%;
 margin-right: 40%;
+cursor: default;
 
 
     }
@@ -102,10 +103,33 @@ margin-right: 40%;
 
     }
 
+    #about{
+      font-size: 20px;
+      text-shadow: 2px;
+      color:#6b5b95
+    }
+
     .sorting{
       border: 2px outset black;
       padding-right:7%;
+      color: black
     }
+
+.checkBoxItems{
+  overflow: scroll
+}
+
+
+
+
+.collapsible-header{
+  background-color: #878f99;
+  color: #6b5b95;
+  font-size: 18px
+
+
+}
+
 
 
 
@@ -118,11 +142,13 @@ margin-right: 40%;
     .signInButton{
       background-color: #DDDDDD;
       color:black;
+      font-size: 20px
     }
 
 
 
     #frontTitle{
+
       background-color: #878f99;
       font-size: 26px;
       color:#6b5b95;
@@ -134,6 +160,7 @@ margin-right: 40%;
     .logoutButton{
       background-color: #DDDDDD;
       color:black;
+      font-size: 20px
     }
 
     .emo{
@@ -156,6 +183,28 @@ margin-right: 40%;
 
 }
 
+#sadnessSort{
+  color:black
+}
+#joySort{
+  color:black;
+}
+#angerSort{
+  color:black
+}
+#fearSort{
+  color:black
+}
+#disgustSort{
+  color:black
+}
+
+#acsendingSort{
+  color:black
+}
+#decsendingSort{
+  color:black
+}
 
 .sortButton{
   background-color: #DDDDDD;
@@ -201,4 +250,21 @@ margin-right: 40%;
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@media only screen and (max-width: 600px) {
+    .toolbar {
+      /*width:50%;*/
+        background-color: #a2b9bc;
+        border: 1px outset black;
+        /*padding:15px;*/
+        margin-top:10px;
+        width:100%;
+        /*display: inline-flex;*/
+    }
+    .sorting{
+      margin:10%;
+      width:50%
+    }
+
 }
