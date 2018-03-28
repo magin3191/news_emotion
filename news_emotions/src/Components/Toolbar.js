@@ -14,7 +14,8 @@ const Toolbar = ({
   checkedIt,
   sourceIds,
   sortFunc,
-  filteredIds
+  filteredIds,
+  sourceSearch
 }) => {
   return (
     <div className="toolbar">
@@ -27,6 +28,7 @@ const Toolbar = ({
           selectAll={selectAll}
           checkedIt={checkedIt}
           sourceIds={sourceIds}
+          sourceSearch={sourceSearch}
 
         />
         <Sorting sortFunc={sortFunc} filteredIds={filteredIds} />

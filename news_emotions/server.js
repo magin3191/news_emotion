@@ -2,6 +2,7 @@ var express = require('express')
 var app = express()
 var port = process.env.PORT || 3000
 var knex = require('./knex')
+const upsert = require('knex-upsert')
 var cors = require('cors')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
@@ -21,6 +22,37 @@ let weekAgo = oneWeekAgo.toISOString().substr(0, 10)
 app.listen(port, function() {
   console.log(`listening on port ${port}`)
 })
+
+app.post('/sources',function(req,res,next){
+  newsapi.v2.everything({
+    sources: `${searchVal}`,
+    language: 'en',
+    country: 'us'
+  }).then(response => {
+    console.log(response);
+  });
+})
+
+app.post('/search',function(req,res,next){
+  console.log(req.body.queryId);
+  //use req.body.queryId to retrieve source id and name from api
+  //then send {name:'New York Times', id: 'new-york-times'}
+  newsapi.v2.everything({
+    sources: `${req.body.queryId}`,
+    language: 'en',
+    // country: 'us'
+  }).then(response =>{
+  response=response.articles[0].source
+  response['selected']=false
+  
+    console.log(response);
+    res.send(response)
+  })
+
+})
+
+
+
 
 app.post('/users', function(req, res, next) {
   knex('users')
@@ -52,14 +84,6 @@ app.post('/users', function(req, res, next) {
     })
 })
 
-app.patch('/watson',function(req,res,next){
-  console.log(req.body.filteredIds);
-  knex('sources')
-  .insert([req.body.filteredIds])
-
-})
-
-
 app.post('/login', function(req, res, next) {
   knex
     .select('*')
@@ -69,96 +93,90 @@ app.post('/login', function(req, res, next) {
     })
     .then(function(user) {
       let theUser = user
-      // console.log(user, 'user') //empty array
       if (!user) {
         res.status(401).send('User doesnt exist')
       }
-      if(bcrypt.compareSync(req.body.password, user[0].password)) {
+      if (bcrypt.compareSync(req.body.password, user[0].password)) {
         knex
           .select('*')
           .from('users_sources')
           .where({
             users_id: user[0].id
           })
-        .join('source', 'users_sources.source_id', 'source.id')
-        .then(function(user){
-          if(!user.length){console.log(theUser,'user')
-          //redirect & return
-          res.status(200).send(user)
-        return
-      }
-          else{
+          .join('source', 'users_sources.source_id', 'source.id')
+          .then(function(user) {
+            if (!user.length) {
 
-            var token = jwt.sign({ id: user[0].id }, 'A4e2n84E0OpF3wW21')
-            let names = user.map(el => {
-              return el.name
-              .split(' ')
-              .join('-')
-              .toLowerCase()
-            })
-            console.log(names)
-            //do watson api call
-            let sourceArr = []
-            function getNews() {
-              newsapi.v2
-              .everything({
-                sources: `${names}`,
-                from: `${weekAgo}`,
-                to: `${date}`,
-                language: 'en',
-                sortBy: 'publishedAt',
-                page: 1,
-                pageSize: 20
+              //redirect & return
+              res.status(200).send(user)
+              return
+            } else {
+              var token = jwt.sign({ id: user[0].id }, 'A4e2n84E0OpF3wW21')
+              let names = user.map(el => {
+                return el.name
+                  .split(' ')
+                  .join('-')
+                  .toLowerCase()
               })
-              .then(response => {
-                response.articles.forEach(source => {
-                  sourceArr.push(source)
-                })
-                getEmotions(sourceArr)
-              })
-            }
-
-            async function getEmotions(sourceArr) {
-              var parameters = {
-                features: {
-                  entities: {
-                    emotion: true,
-                    sentiment: true,
-                    limit: 2
-                  },
-                  keywords: {
-                    emotion: true,
-                    sentiment: true,
-                    limit: 2
-                  }
-                }
+              //do watson api call
+              let sourceArr = []
+              function getNews() {
+                newsapi.v2
+                  .everything({
+                    sources: `${names}`,
+                    from: `${weekAgo}`,
+                    to: `${date}`,
+                    language: 'en',
+                    sortBy: 'publishedAt',
+                    page: 1,
+                    pageSize: 20
+                  })
+                  .then(response => {
+                    response.articles.forEach(source => {
+                      sourceArr.push(source)
+                    })
+                    getEmotions(sourceArr)
+                  })
               }
 
-              for (let i = 0; i < sourceArr.length; i++) {
-                parameters['url'] = `${sourceArr[i].url}`
-                natural_language_understanding.analyze(parameters, function(
-                  err,
-                  response
-                ) {
-                  if (err) console.log('error:', err)
-                  else {
-                    if (response.entities[0]) {
-                      sourceArr[i]['emotion'] = response.entities[0].emotion
+              async function getEmotions(sourceArr) {
+                var parameters = {
+                  features: {
+                    entities: {
+                      emotion: true,
+                      sentiment: true,
+                      limit: 2
+                    },
+                    keywords: {
+                      emotion: true,
+                      sentiment: true,
+                      limit: 2
                     }
                   }
-                })
+                }
+
+                for (let i = 0; i < sourceArr.length; i++) {
+                  parameters['url'] = `${sourceArr[i].url}`
+                  natural_language_understanding.analyze(parameters, function(
+                    err,
+                    response
+                  ) {
+                    if (err) console.log('error:', err)
+                    else {
+                      if (response.entities[0]) {
+                        sourceArr[i]['emotion'] = response.entities[0].emotion
+                      }
+                    }
+                  })
+                }
+                setTimeout(function() {
+                  res.status(200).json({ sourceArr: sourceArr, token: token })
+                }, 2000)
               }
-              setTimeout(function() {
-                res.status(200).json({ sourceArr: sourceArr, token: token })
-              }, 2000)
+
+              getNews()
             }
-
-            getNews()
-
-          }
-
-        })
-
+          })
 
         // res.status(200).send({ message: 'logged in', token: token })
       } else {
@@ -181,6 +199,32 @@ app.post('/watson', function(req, res, next) {
 
   let sourceArr = []
   let body = req.body.id
+
+  function insertSources(username) {
+    knex('users')
+      .where({ username: username })
+      .select('id')
+      .then(function(id) {
+        let data = body.map(el => {
+          let obj = {
+            source_id: el,
+            users_id: id[0].id
+          }
+          return obj
+        })
+
+
+        return data
+        knex('users_sources')
+        .insert(data)
+      }).then(function(data){
+        console.log(data,'data');
+      })
+
+  }
+
+  insertSources(req.body.username)
+
   if (body.length === 0) {
     res.send(sourceArr)
     return
@@ -236,7 +280,7 @@ app.post('/watson', function(req, res, next) {
     }
     setTimeout(function() {
       res.json(sourceArr)
-    }, 3000)
+    }, 2000)
 
     // res.status(200).json(sourceArr)
   }
