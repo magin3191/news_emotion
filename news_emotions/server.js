@@ -33,6 +33,24 @@ app.post('/sources',function(req,res,next){
   });
 })
 
+app.post('/search',function(req,res,next){
+  console.log(req.body.queryId);
+  //use req.body.queryId to retrieve source id and name from api
+  //then send {name:'New York Times', id: 'new-york-times'}
+  newsapi.v2.everything({
+    sources: `${req.body.queryId}`,
+    language: 'en',
+    // country: 'us'
+  }).then(response =>{
+  response=response.articles[0].source
+  response['selected']=false
+  
+    console.log(response);
+    res.send(response)
+  })
+
+})
+
 
 
 

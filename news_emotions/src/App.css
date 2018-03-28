@@ -116,7 +116,9 @@ cursor: default;
     }
 
 .checkBoxItems{
-  overflow: scroll
+  overflow: scroll;
+  height: 100%
+
 }
 
 

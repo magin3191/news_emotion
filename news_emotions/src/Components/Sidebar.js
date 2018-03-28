@@ -12,31 +12,32 @@ import getNews from '../App.js'
 import $ from 'jquery'
 
 const Sidebar = ({
-  data,
   filteredData,
   toggleCheck,
   genericToggle,
   submitFunc,
   selectAll,
   checkedIt,
-  sourceIds
+  sourceIds,
+  sourceSearch
 }) => {
   return (
     <SideNav
       trigger={<Button id="selectSourcesbtn">Select Sources</Button>}
       options={{ closeOnClick: false }}
     >
-      <SideNavItem />
-      <SideNavItem>
-        <form>
+
+      {/* <SideNavItem> */}
+        <form onSubmit={sourceSearch}>
         <Input
           className="search"
           name="search"
           s={10}
           label="Source Search"
         />
+        <button type='submit'>Search</button>
       </form>
-      </SideNavItem>
+
 
       <SideNavItem>
         <button id="selectAllbtn" onClick={selectAll}>
